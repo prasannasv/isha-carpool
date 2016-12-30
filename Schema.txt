@@ -1,0 +1,35 @@
+User:
+  id: authenticated email
+  first name
+  last name
+  phone number
+  role (regular, trip_organizer, admin)
+
+Trip:
+  id
+  from
+  to
+  departure time
+  departure date
+  creator
+  created on  
+  
+PoolOffer:
+  id
+  trip_id
+  user_id
+  seats_available
+  match_type (auto, manual)
+
+PoolRequest:
+  id
+  trip_id
+  user_id
+  seats_requested (this is so to let folks travel together with their family members)
+
+OfferMatch:
+  id
+  trip_id
+  offer_id
+  request_id
+

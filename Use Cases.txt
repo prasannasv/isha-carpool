@@ -1,0 +1,18 @@
+Use Cases
+
+Admin
+* Able to create trip organizers
+* Able to make existing user as a trip organizer
+
+Trip Organizer
+* Able to create trips
+* Able to view existing trips created by anyone
+* Able to delete existing trips created by anyone
+* Able to get a link to the trip that is shareable with others.
+
+Regular Users
+* Is able to view a shared trip
+* Is able to offer a ride to that trip
+* Is able to request for a ride for that trip
+* Is able to see past trips by them
+
