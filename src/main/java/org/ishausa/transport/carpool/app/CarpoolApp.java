@@ -1,4 +1,4 @@
-package org.ishausa.carpool.app;
+package org.ishausa.transport.carpool.app;
 
 import static spark.Spark.*;
 
@@ -7,6 +7,8 @@ import static spark.Spark.*;
  */
 public class CarpoolApp {
     public static void main(final String[] args) {
+        port(Integer.parseInt(System.getenv("PORT")));
+
         get("/", (req, res) -> "Hello World!");
     }
 }
