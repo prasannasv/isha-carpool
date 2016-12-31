@@ -21,10 +21,8 @@ public class HttpsEnforcer implements Filter {
 
         if (!request.url().startsWith("http://localhost:")) {
             final String forwardedProto = request.headers(X_FORWARDED_PROTO);
-            final String scheme = request.scheme();
-            log.info("forwardedProto: " + forwardedProto + ", scheme: " + scheme);
 
-            if ("http".equals(forwardedProto) || "http".equals(scheme)) {
+            if ("http".equals(forwardedProto)) {
                 log.info("Redirecting to a secure scheme on a non-secure request");
                 response.redirect(request.url().replace("http://", "https://"));
                 halt();
