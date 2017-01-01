@@ -4,18 +4,12 @@ angular.
   module('tripList').
   component('tripList', {
     templateUrl: 'trip-list/trip-list.template.html',
-    controller: function TripListController() {
-        this.trips = [
-            {
-                from: 'BNA',
-                to: 'iii',
-                departureDateAndTime: new Date()
-            },
-            {
-                from: 'iii',
-                to: 'BNA',
-                departureDateAndTime: new Date()
-            }
-        ];
+    controller: function TripListController($http) {
+      var self = this;
+
+      $http.get('/api/v1/trips').then(function (response) {
+        console.log("response", response);
+        self.trips = response.data;
+      });
     }
 });
