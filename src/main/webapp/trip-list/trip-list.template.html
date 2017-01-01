@@ -15,7 +15,7 @@
             Departure Date & Time
         </th>
     </tr>
-    <tr ng-repeat="trip in $ctrl.trips">
+    <tr ng-repeat="trip in $ctrl.trips" data-href="#/trips/{{trip.id}}">
         <td>{{$index+1}}</td>
         <td>
             {{trip.from}}
