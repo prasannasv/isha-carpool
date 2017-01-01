@@ -1,6 +1,5 @@
 package org.ishausa.transport.carpool.app;
 
-import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
 import org.ishausa.transport.carpool.renderer.JsonTransformer;
 import org.ishausa.transport.carpool.renderer.SoyRenderer;
@@ -71,6 +70,8 @@ public class CarpoolApp {
         }
 
         staticFiles.location(Paths.STATIC);
+        //TODO: detect if it is running on heroku and update the path
+        staticFiles.externalLocation("/Users/tosri/Code/IshaCarPool/src/main/webapp");
 
         initFilters();
 
@@ -85,8 +86,8 @@ public class CarpoolApp {
     private void configureRoutes() {
         configureAuthEndpoints();
 
-        get(Paths.INDEX, (req, res) -> SoyRenderer.INSTANCE.render(SoyRenderer.CarPoolAppTemplate.INDEX,
-                ImmutableMap.of("name", req.session().attribute(AuthenticationHandler.NAME))));
+        //get(Paths.INDEX, (req, res) -> SoyRenderer.INSTANCE.render(SoyRenderer.CarPoolAppTemplate.INDEX,
+                //ImmutableMap.of("name", req.session().attribute(AuthenticationHandler.NAME))));
 
         configureTripResourceEndpoints();
     }

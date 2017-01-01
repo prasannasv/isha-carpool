@@ -5,7 +5,7 @@ package org.ishausa.transport.carpool.app;
  */
 public class Paths {
     public static final String STATIC = "/static";
-    public static final String INDEX = "/";
+    public static final String INDEX = "/index.html";
     public static final String LOGIN = "/login";
     public static final String VALIDATE_ID_TOKEN = "/validate_id_token";
 
