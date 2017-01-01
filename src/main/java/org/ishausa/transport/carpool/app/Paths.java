@@ -8,4 +8,9 @@ public class Paths {
     public static final String INDEX = "/";
     public static final String LOGIN = "/login";
     public static final String VALIDATE_ID_TOKEN = "/validate_id_token";
+
+    private static final String API_VERSION = "/api/v1";
+
+    public static final String TRIPS = API_VERSION + "/trips";
+    public static final String TRIP_BY_ID = TRIPS + "/:id";
 }
