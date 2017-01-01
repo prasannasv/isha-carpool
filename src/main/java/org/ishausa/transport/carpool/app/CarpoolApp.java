@@ -9,6 +9,7 @@ import org.ishausa.transport.carpool.security.HttpsEnforcer;
 import org.ishausa.transport.carpool.service.TripsService;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import spark.HaltException;
 import spark.utils.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +58,11 @@ public class CarpoolApp {
     private void init() {
         exception(Exception.class, (exception, request, response) -> {
             log.log(Level.WARNING, "Exception occurred when serving request to " + request.pathInfo(), exception);
+
+            // http://static.javadoc.io/com.sparkjava/spark-core/2.5.4/spark/Spark.html#halt--
+            if (exception instanceof HaltException) {
+                throw (HaltException) exception;
+            }
         });
 
         final String port = System.getenv("PORT");
