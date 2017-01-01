@@ -1,8 +1,5 @@
 'use strict';
 
-alert('tripList module in component', angular.module('tripList'));
-console.log('tripList module in component', angular.module('tripList'));
-
 angular.
   module('tripList').
   component('tripList', {
@@ -22,4 +19,3 @@ angular.
         ];
     }
 });
-console.log("tripList component registered", angular.module('tripList').component('tripList'));
