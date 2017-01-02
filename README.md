@@ -5,9 +5,9 @@ Simple mobile friendly web app to request / offer carpool for pre-defined trips 
 
 
 # Technologies
-This is a single page application (SPA) built using a few frameworks.
+This is a single page application (SPA) built using AngularJs, Sparkjava, MongoDb (through Morphia) deployed in Heroku.
 
-## Client
+## Client - App that runs on the browser
 
 ### Framework
 After evaluating both AngularJs and ReactJs, I ended up choosing AngularJs because of the following reasons:
@@ -20,7 +20,7 @@ At one point, I was too confused about picking a framework that I thought I woul
 ### Bootstrap &amp; Jquery
 I guess, these are no-brainers.
 
-## Server
+## Server - App that serves html and json blobs
 ### Language
 Chose Java as I am super fluent with it.
 
@@ -45,8 +45,6 @@ I had pre-decided that I will not make my users remember yet another username/pa
 
 ## Summary
 So, in summary, I built this app, that
-* Sparkjava framework to deliver both the static files like js, images, css etc., and the dynamic web app built over Java 8,
-* uses closure templates,
 * authenticates the user through Sign-in with Google,
 * persists information in MongoDb through Morphia,
 * renders json blobs over /api/ endpoints, html templated with closure, and static files, all from the same Sparkjava framework (I may eventually move the client app to a separate repo and framework),
