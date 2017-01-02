@@ -2,15 +2,19 @@ package org.ishausa.transport.carpool.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.bson.types.ObjectId;
 import org.ishausa.transport.carpool.model.Trip;
 import org.mongodb.morphia.Datastore;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by tosri on 12/30/2016.
  */
 public class TripsService {
+    private static final Logger log = Logger.getLogger(TripsService.class.getName());
+
     private static final Gson GSON = new GsonBuilder().create();
 
     private final Datastore datastore;
@@ -28,6 +32,8 @@ public class TripsService {
     }
 
     public Trip find(final String id) {
-        return datastore.get(Trip.class, id);
+        final Trip trip = datastore.get(Trip.class, new ObjectId(id));
+        log.info("trip for id: " + id + ", trip: " + GSON.toJson(trip));
+        return trip;
     }
 }
