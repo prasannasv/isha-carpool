@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import static spark.Spark.before;
 import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.halt;
 import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
@@ -86,8 +87,11 @@ public class CarpoolApp {
     private void configureRoutes() {
         configureAuthEndpoints();
 
-        //get(Paths.INDEX, (req, res) -> SoyRenderer.INSTANCE.render(SoyRenderer.CarPoolAppTemplate.INDEX,
-                //ImmutableMap.of("name", req.session().attribute(AuthenticationHandler.NAME))));
+        get("/", (req, res) -> {
+            res.redirect(Paths.MAIN);
+            halt();
+            return null;
+        });
 
         configureTripResourceEndpoints();
     }

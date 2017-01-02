@@ -1,4 +1,8 @@
+'use strict';
+
 var carpoolApp = angular.module('carpoolApp', [
+    'ngRoute',
+    'tripDetail',
     'tripList'
 ]);
 

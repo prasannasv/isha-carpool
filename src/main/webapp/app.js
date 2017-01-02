@@ -1,3 +1,4 @@
+'use strict';
 
 // Make all table's rows as clickable if it has data-href set.
 // http://stackoverflow.com/a/29129307/7247103

@@ -40,8 +40,8 @@
 
 <section>
     <div class="container">
-        <div class="starter-template">
-            <trip-list></trip-list>
+        <div class="starter-template" ng-view>
+
         </div>
     </div><!-- /.container -->
 </section>
@@ -64,10 +64,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
 <script src="app.module.js"></script>
+<script src="app.config.js"></script>
 <script src="trip-list/trip-list.module.js"></script>
 <script src="trip-list/trip-list.component.js"></script>
+<script src="trip-detail/trip-detail.module.js"></script>
+<script src="trip-detail/trip-detail.component.js"></script>
 
 <script src="app.js"></script>
 
