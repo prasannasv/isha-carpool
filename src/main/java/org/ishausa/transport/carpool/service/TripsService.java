@@ -2,6 +2,7 @@ package org.ishausa.transport.carpool.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.bson.types.ObjectId;
 import org.ishausa.transport.carpool.model.Trip;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
@@ -37,7 +38,7 @@ public class TripsService {
     }
 
     public Trip find(final String id) {
-        final Trip trip = datastore.get(Trip.class, id);
+        final Trip trip = datastore.get(Trip.class, new ObjectId(id));
 
         log.info("trip for id: " + id + ", trip: " + GSON.toJson(trip));
 
