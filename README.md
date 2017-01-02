@@ -47,6 +47,7 @@ So, in summary, I built this app, that
 * authenticates the user through Sign-in with Google,
 * persists information in MongoDb through Morphia,
 * renders json blobs over /api/ endpoints, html templated with closure, and static files, all from the same Sparkjava framework (I may eventually move the client app to a separate repo and framework),
-* and mainly, creates a single-page application using AngularJs.
+* deployed in Heroku with mLab's mongodb instance,
+* and mainly, uses AngularJs to deliver a single-page application.
 
 It took 3 days to develop the app to its current state where I can create, view and list trips. Long way to go.
