@@ -1,5 +1,6 @@
 package org.ishausa.transport.carpool.app;
 
+import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
 import org.ishausa.transport.carpool.renderer.JsonTransformer;
 import org.ishausa.transport.carpool.renderer.SoyRenderer;
@@ -11,14 +12,12 @@ import org.mongodb.morphia.Morphia;
 import spark.HaltException;
 import spark.utils.StringUtils;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static spark.Spark.before;
 import static spark.Spark.exception;
 import static spark.Spark.get;
-import static spark.Spark.halt;
 import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
@@ -87,11 +86,9 @@ public class CarpoolApp {
     private void configureRoutes() {
         configureAuthEndpoints();
 
-        get("/", (req, res) -> {
-            res.redirect(Paths.MAIN);
-            halt();
-            return null;
-        });
+        get(Paths.MAIN, (req, res) ->
+                SoyRenderer.INSTANCE.render(SoyRenderer.CarPoolAppTemplate.MAIN,
+                        ImmutableMap.of("name", req.session().attribute(AuthenticationHandler.NAME))));
 
         configureTripResourceEndpoints();
     }
@@ -102,14 +99,11 @@ public class CarpoolApp {
     }
 
     private void configureTripResourceEndpoints() {
-        post(Paths.TRIPS, ContentType.JSON, (req, res) -> {
-            tripsService.createTrip(req.body());
-            res.status(HttpServletResponse.SC_CREATED);
-            return res;
-        }, jsonTransformer);
+        post(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.createTrip(), jsonTransformer);
 
         get(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.listAll(), jsonTransformer);
 
-        get(Paths.TRIP_BY_ID, ContentType.JSON, (req, res) -> tripsService.find(req.params(":id")), jsonTransformer);
+        get(Paths.TRIP_BY_ID, ContentType.JSON,
+                (req, res) -> tripsService.find(req.params(Paths.ID_PARAM)), jsonTransformer);
     }
 }
