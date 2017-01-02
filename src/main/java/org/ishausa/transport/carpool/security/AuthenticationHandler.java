@@ -112,7 +112,7 @@ public class AuthenticationHandler {
         }
 
         static LoginResponse success() {
-            return new LoginResponse(true, Paths.INDEX, "");
+            return new LoginResponse(true, Paths.MAIN, "");
         }
 
         static LoginResponse failure(final String errorMessage) {

@@ -13,7 +13,7 @@ import java.util.Map;
 public class SoyRenderer {
     public enum CarPoolAppTemplate {
         LOGIN,
-        INDEX;
+        MAIN;
 
         @Override
         public String toString() {

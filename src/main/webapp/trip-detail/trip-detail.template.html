@@ -1,0 +1,23 @@
+<table class="table">
+  <tr>
+    <td><label>From</label></td>
+
+    <td>
+      {{$ctrl.trip.from}}
+    </td>
+  </tr>
+  <tr>
+    <td><label>To</label></td>
+
+    <td>
+      {{$ctrl.trip.to}}
+    </td>
+  </tr>
+  <tr>
+    <td><label>Departure Date & Time</label></td>
+
+    <td>
+      {{$ctrl.trip.departureDateAndTime |date:'medium'}}
+    </td>
+  </tr>
+</table>
