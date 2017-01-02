@@ -99,7 +99,7 @@ public class CarpoolApp {
     }
 
     private void configureTripResourceEndpoints() {
-        post(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.createTrip(), jsonTransformer);
+        post(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.createTrip(req.body()), jsonTransformer);
 
         get(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.listAll(), jsonTransformer);
 
