@@ -2,6 +2,7 @@ package org.ishausa.transport.carpool.app;
 
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.ishausa.transport.carpool.renderer.JsonTransformer;
 import org.ishausa.transport.carpool.renderer.SoyRenderer;
 import org.ishausa.transport.carpool.security.AuthenticationHandler;
@@ -48,7 +49,15 @@ public class CarpoolApp {
         final Morphia morphia = new Morphia();
         morphia.mapPackage("org.ishausa.transport.carpool.model");
 
-        final Datastore datastore = morphia.createDatastore(new MongoClient(), "carpool-app");
+        final Datastore datastore;
+        final String mongoUri = System.getenv("MONGODB_URI");
+        if (!StringUtils.isBlank(mongoUri)) {
+            final MongoClientURI clientURI = new MongoClientURI(mongoUri);
+            datastore = morphia.createDatastore(new MongoClient(clientURI), clientURI.getDatabase());
+        } else {
+            datastore = morphia.createDatastore(new MongoClient(), "carpool-app");
+        }
+
         datastore.ensureIndexes();
 
         return datastore;
@@ -70,8 +79,11 @@ public class CarpoolApp {
         }
 
         staticFiles.location(Paths.STATIC);
-        //TODO: detect if it is running on heroku and update the path
-        staticFiles.externalLocation("/Users/tosri/Code/IshaCarPool/src/main/webapp");
+        if (RuntimeEnvironment.isOnHeroku()) {
+            staticFiles.externalLocation("/app/src/main/webapp");
+        } else {
+            staticFiles.externalLocation("/Users/tosri/Code/IshaCarPool/src/main/webapp");
+        }
 
         initFilters();
 
