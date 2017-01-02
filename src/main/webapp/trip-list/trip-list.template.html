@@ -1,4 +1,4 @@
-<h2>All Trips <a class="btn btn-primary pull-right" href="#/create"><i class="icon-plus-sign icon-white"></i> New Trip</a></h2>
+<h2>All Trips <a class="btn btn-primary pull-right" href="#!/create"><i class="icon-plus-sign icon-white"></i> New Trip</a></h2>
 
 <table class="table table-hover">
     <tr>
@@ -14,8 +14,11 @@
         <th style="text-align: center">
             Departure Date & Time
         </th>
+        <th style="text-align: center">
+            Details
+        </th>
     </tr>
-    <tr ng-repeat="trip in $ctrl.trips" data-href="#/trips/{{trip.id}}">
+    <tr ng-repeat="trip in $ctrl.trips">
         <td>{{$index+1}}</td>
         <td>
             {{trip.from}}
@@ -25,6 +28,9 @@
         </td>
         <td>
             {{trip.departureDateAndTime |date:'medium'}}
+        </td>
+        <td>
+            <a href="#!/trips/{{trip.id}}"><img src="images/view.png" width="20"></a>
         </td>
     </tr>
 </table>
