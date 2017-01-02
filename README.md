@@ -20,7 +20,7 @@ At one point, I was too confused about picking a framework that I thought I woul
 ### Bootstrap &amp; Jquery
 I guess, these are no-brainers.
 
-## Server - App that serves html and json blobs
+## Server - App that serves static files, dynamic html and json blobs
 ### Language
 Chose Java as I am super fluent with it.
 
@@ -50,5 +50,6 @@ So, in summary, I built this app, that
 * renders json blobs over /api/ endpoints, html templated with closure, and static files, all from the same Sparkjava framework (I may eventually move the client app to a separate repo and framework),
 * deployed in Heroku with mLab's mongodb instance,
 * and mainly, uses AngularJs to deliver a single-page application.
+I also used [lombok](https://projectlombok.org/) to avoid all the getter / setter boilerplate. 
 
 It took 3 days to develop the app to its current state where I can create, view and list trips. Long way to go.
