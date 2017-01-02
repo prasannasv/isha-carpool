@@ -2,13 +2,7 @@
 
 var carpoolApp = angular.module('carpoolApp', [
     'ngRoute',
+    'tripCreate',
     'tripDetail',
     'tripList'
 ]);
-
-carpoolApp.component('greetUser', {
-    template: 'Hello, {{$ctrl.user}}!',
-    controller: function GreetUserController() {
-        this.user = 'world';
-    }
-});

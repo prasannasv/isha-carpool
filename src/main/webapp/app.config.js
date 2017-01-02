@@ -13,6 +13,9 @@ angular.
         when('/trips/:tripId', {
           template: '<trip-detail></trip-detail>'
         }).
+        when('/trip_create', {
+          template: '<trip-create></trip-create>'
+        }).
         otherwise('/trips');
     }
   ]);
