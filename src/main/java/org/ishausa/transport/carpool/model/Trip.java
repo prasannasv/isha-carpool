@@ -9,11 +9,9 @@ import java.util.Date;
 /**
  * Created by tosri on 12/30/2016.
  */
-@Entity(Trip.COLLECTION_NAME)
 @Data
+@Entity("trips")
 public class Trip {
-    public static final String COLLECTION_NAME = "trips";
-
     @Id
     private String id;
     private String from;

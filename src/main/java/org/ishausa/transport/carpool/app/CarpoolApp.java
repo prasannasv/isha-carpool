@@ -8,6 +8,7 @@ import org.ishausa.transport.carpool.renderer.SoyRenderer;
 import org.ishausa.transport.carpool.security.AuthenticationHandler;
 import org.ishausa.transport.carpool.security.HttpsEnforcer;
 import org.ishausa.transport.carpool.service.TripsService;
+import org.ishausa.transport.carpool.service.UsersService;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import spark.utils.StringUtils;
@@ -31,6 +32,8 @@ public class CarpoolApp {
     private final JsonTransformer jsonTransformer;
 
     private final TripsService tripsService;
+    private final UsersService usersService;
+    private final AuthenticationHandler authenticationHandler;
 
     public static void main(final String[] args) {
         final CarpoolApp app = new CarpoolApp();
@@ -42,6 +45,8 @@ public class CarpoolApp {
         jsonTransformer = new JsonTransformer();
         final Datastore datastore = setupMorphia();
         tripsService = new TripsService(datastore);
+        usersService = new UsersService(datastore);
+        authenticationHandler = new AuthenticationHandler(usersService);
     }
 
     private Datastore setupMorphia() {
@@ -87,7 +92,7 @@ public class CarpoolApp {
 
     private void initFilters() {
         before(new HttpsEnforcer());
-        before(AuthenticationHandler::ensureAuthenticated);
+        before(authenticationHandler::ensureAuthenticated);
     }
 
     private void configureRoutes() {
@@ -102,7 +107,7 @@ public class CarpoolApp {
 
     private void configureAuthEndpoints() {
         get(Paths.LOGIN, (req, res) -> SoyRenderer.INSTANCE.render(SoyRenderer.CarPoolAppTemplate.LOGIN));
-        post(Paths.VALIDATE_ID_TOKEN, AuthenticationHandler::finishLogin);
+        post(Paths.VALIDATE_ID_TOKEN, authenticationHandler::finishLogin);
     }
 
     private void configureTripResourceEndpoints() {

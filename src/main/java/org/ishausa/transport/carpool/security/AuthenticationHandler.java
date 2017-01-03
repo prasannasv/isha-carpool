@@ -9,6 +9,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ishausa.transport.carpool.app.Paths;
+import org.ishausa.transport.carpool.model.User;
+import org.ishausa.transport.carpool.service.UsersService;
 import spark.Request;
 import spark.Response;
 import spark.utils.StringUtils;
@@ -45,7 +47,13 @@ public class AuthenticationHandler {
     /* request params */
     private static final String ID_TOKEN = "id_token";
 
-    public static void ensureAuthenticated(final Request request, final Response response) throws Exception {
+    private final UsersService usersService;
+
+    public AuthenticationHandler(final UsersService usersService) {
+        this.usersService = usersService;
+    }
+
+    public void ensureAuthenticated(final Request request, final Response response) throws Exception {
         final String sessionId = request.session().attribute(SESSION_ID);
 
         final String path = request.pathInfo();
@@ -60,13 +68,13 @@ public class AuthenticationHandler {
         }
     }
 
-    private static boolean isValidSessionId(final String sessionId) {
-        //TODO: Do a deep check by looking up in our database.
-
-        return !StringUtils.isBlank(sessionId);
+    private boolean isValidSessionId(final String sessionId) {
+        return !StringUtils.isBlank(sessionId) &&
+                // An entry in our database means this user has authorized our app before
+                usersService.findById(sessionId) != null;
     }
 
-    public static String finishLogin(final Request request, final Response response)
+    public String finishLogin(final Request request, final Response response)
             throws GeneralSecurityException, IOException {
 
         response.type("application/json");
@@ -90,7 +98,7 @@ public class AuthenticationHandler {
             request.session().attribute(SESSION_ID, userId);
             request.session().attribute(NAME, payload.get("name"));
 
-            // TODO: store session id in our database
+            createOrUpdateUser(payload);
 
             // Learning:
             // POST can't redirect to another path (http://stackoverflow.com/questions/34992607/spark-java-redirect-browser-does-not-redirect)
@@ -98,6 +106,18 @@ public class AuthenticationHandler {
         } else {
             return GSON.toJson(LoginResponse.failure("Invalid Id token"));
         }
+    }
+
+    private void createOrUpdateUser(final GoogleIdToken.Payload payload) {
+        final User user = new User();
+
+        user.setUserId(payload.getSubject());
+        user.setEmail(payload.getEmail());
+        user.setName((String) payload.get("name"));
+        user.setLastName((String) payload.get("family_name"));
+        user.setFirstName((String) payload.get("given_name"));
+
+        usersService.createOrUpdate(user);
     }
 
     private static class LoginResponse {
