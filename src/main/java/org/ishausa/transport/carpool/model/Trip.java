@@ -7,7 +7,7 @@ import org.mongodb.morphia.annotations.Id;
 import java.util.Date;
 
 /**
- * Created by tosri on 12/30/2016.
+ * Created by Prasanna Venkat on 12/30/2016.
  */
 @Data
 @Entity("trips")

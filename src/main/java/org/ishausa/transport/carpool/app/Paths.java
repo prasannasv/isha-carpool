@@ -1,7 +1,7 @@
 package org.ishausa.transport.carpool.app;
 
 /**
- * Created by tosri on 12/30/2016.
+ * Created by Prasanna Venkat on 12/30/2016.
  */
 public class Paths {
     public static final String STATIC = "/static";
@@ -14,4 +14,8 @@ public class Paths {
     public static final String TRIPS = API_VERSION + "/trips";
     public static final String ID_PARAM = ":id";
     public static final String TRIP_BY_ID = TRIPS + "/" + ID_PARAM;
+
+    public static final String RIDE_OFFER_FOR_TRIP_ID = TRIP_BY_ID + "/ride_offer";
+    public static final String RIDE_REQUEST_FOR_TRIP_ID = TRIP_BY_ID + "/ride_request";
+    public static final String RIDE_OFFERS_FOR_TRIP_ID = TRIP_BY_ID + "/ride_offers";
 }

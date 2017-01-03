@@ -9,6 +9,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ishausa.transport.carpool.app.Paths;
+import org.ishausa.transport.carpool.model.Role;
 import org.ishausa.transport.carpool.model.User;
 import org.ishausa.transport.carpool.service.UsersService;
 import spark.Request;
@@ -28,7 +29,7 @@ import static spark.Spark.halt;
  *
  * Steps: https://developers.google.com/identity/sign-in/web/devconsole-project
  *
- * Created by tosri on 12/30/2016.
+ * Created by Prasanna Venkat on 12/30/2016.
  */
 public class AuthenticationHandler {
     private static final Logger log = Logger.getLogger(AuthenticationHandler.class.getName());
@@ -113,13 +114,12 @@ public class AuthenticationHandler {
     }
 
     private void createOrUpdateUser(final GoogleIdToken.Payload payload) {
-        final User user = new User();
-
-        user.setUserId(payload.getSubject());
-        user.setEmail(payload.getEmail());
-        user.setName((String) payload.get("name"));
-        user.setLastName((String) payload.get("family_name"));
-        user.setFirstName((String) payload.get("given_name"));
+        final User user = new User(payload.getSubject(),
+                (String) payload.get("name"),
+                (String) payload.get("given_name"),
+                (String) payload.get("family_name"),
+                payload.getEmail(),
+                Role.REGULAR);
 
         usersService.createOrUpdate(user);
     }

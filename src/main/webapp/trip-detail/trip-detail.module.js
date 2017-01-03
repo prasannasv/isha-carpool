@@ -1,5 +1,7 @@
 'use strict';
 
 angular.module('tripDetail', [
-  'ngRoute'
+  'ngRoute',
+  'rideOfferList',
+  'rideCreate'
 ]);

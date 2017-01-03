@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 /**
- * Created by tosri on 12/30/2016.
+ * Created by Prasanna Venkat on 12/30/2016.
  */
 public class HttpsEnforcer implements Filter {
     private static final Logger log = Logger.getLogger(HttpsEnforcer.class.getName());

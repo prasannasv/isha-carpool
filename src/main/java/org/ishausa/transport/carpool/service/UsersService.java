@@ -6,7 +6,7 @@ import org.mongodb.morphia.Datastore;
 import java.util.logging.Logger;
 
 /**
- * Created by tosri on 1/2/2017.
+ * Created by Prasanna Venkat on 1/2/2017.
  */
 public class UsersService {
     private static final Logger log = Logger.getLogger(UsersService.class.getName());

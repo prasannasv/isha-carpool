@@ -9,7 +9,6 @@ angular.
        * Exports the following model information for the given tripId.
        *
        * trip - the Trip object corresponding to the given tripId.
-       * offers - all the RideOffer objects corresponding to this trip.
        * requests - all the RideRequest objects corresponding to this trip.
        * matchedOffers - all the OfferRequestMatch objects corresponding to this trip, grouped by RideOffer.
        */
@@ -23,9 +22,6 @@ angular.
           self.trip.departureDateAndTime = new Date(self.trip.departureDateAndTime);
           self.trip.createdAt = new Date(self.trip.createdAt);
         });
-
-        self.offers = [
-        ];
 
         self.requests = [
         ];

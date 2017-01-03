@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by tosri on 12/30/2016.
+ * Created by Prasanna Venkat on 12/30/2016.
  */
 public class TripsService {
     private static final Logger log = Logger.getLogger(TripsService.class.getName());

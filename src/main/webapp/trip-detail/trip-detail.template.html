@@ -6,79 +6,8 @@
 <hr>
 
 <!-- Show all Ride Offers for this trip (even fully matched ones?, maybe indicate that separately) -->
-<h3>All Ride Offers for this Trip</h3>
-<table class="table table-striped">
-  <tr>
-    <th>#</th>
-    <th>Offered By</th>
-    <th>Seats Offered</th>
-    <th>Offered On</th>
-    <th>Match Status</th>
-  </tr>
-</table>
+<ride-offer-list></ride-offer-list>
 <hr>
 
-<!-- Show all Ride Requests for this trip (same here) -->
-<h3>All Ride Requests for this Trip</h3>
-<table class="table table-striped">
-  <tr>
-    <th>#</th>
-    <th>Requested By</th>
-    <th>Seats Requested</th>
-    <th>Requested On</th>
-    <th>Match Status</th>
-  </tr>
-</table>
-<hr>
-
-<form>
-  <button>Match remaining Requests with Offers Now</button>
-  <button>Redo all matches</button>
-</form>
-
-<!-- Show matched Ride Offers & Requests -->
-<h3>All Matched Offers for this Trip</h3>
-<table class="table table-striped">
-  <tr>
-    <th>#</th>
-    <th>Offered By</th>
-    <th>Seats Offered</th>
-    <th>Offered On</th>
-    <th>Matched Requests</th>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>Name</td>
-    <td>4</td>
-    <td>Date</td>
-    <td>
-      <table class="table table-striped">
-      <tr>
-          <th>Requested By</th>
-          <th>Requested Seats</th>
-          <th>Matched Seats</th>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-
-<hr>
-<!-- Form for user to offer or request ride -->
-<!-- shown only if the user has not requested or offered a ride to this trip -->
-<form>
-  <label>I would like to</label>
-  <radio option="offer ride"></radio>
-  <radio option="request ride"></radio>
-
-  <label>Number of seats</label>
-  <select>
-    <option value="1"></option>
-    <option value="2"></option>
-    <option value="3"></option>
-    <!-- ... -->
-    <option value="6"></option>
-  </select>
-
-  <button>Submit</button>
-</form>
+<!-- Ability to create a ride -->
+<ride-create></ride-create>

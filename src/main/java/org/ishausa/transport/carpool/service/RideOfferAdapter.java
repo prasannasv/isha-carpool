@@ -11,21 +11,24 @@ import java.util.logging.Logger;
 /**
  * Converts the RideOffer instance to an object that is view friendly.
  *
- * Created by tosri on 1/2/2017.
+ * Created by Prasanna Venkat on 1/2/2017.
  */
 public class RideOfferAdapter {
     private static final Logger log = Logger.getLogger(RideOfferAdapter.class.getName());
 
     private final UsersService usersService;
-    private final OfferRequestMatchService offerRequestMatchService;
+    private final OfferRequestMatchesService offerRequestMatchesService;
 
     public RideOfferAdapter(final UsersService usersService,
-                            final OfferRequestMatchService offerRequestMatchService) {
+                            final OfferRequestMatchesService offerRequestMatchesService) {
         this.usersService = usersService;
-        this.offerRequestMatchService = offerRequestMatchService;
+        this.offerRequestMatchesService = offerRequestMatchesService;
     }
 
     public RideOffer transform(final org.ishausa.transport.carpool.model.RideOffer rideOffer) {
+        if (rideOffer == null) {
+            return null;
+        }
         log.info("Transforming rideOffer: " + rideOffer);
 
         final User user = usersService.findById(rideOffer.getUserId());
@@ -33,12 +36,12 @@ public class RideOfferAdapter {
 
         final RideOffer adaptedOffer = new RideOffer();
 
-        adaptedOffer.setOfferedBy(user.getEmail());
+        adaptedOffer.setOfferedBy(String.format("%s (%s)", user.getName(), user.getEmail()));
         adaptedOffer.setOfferedOn(rideOffer.getOfferedOn());
         adaptedOffer.setSeatsOffered(rideOffer.getSeatsOffered());
 
         final List<OfferRequestMatch> matchedRequests =
-                offerRequestMatchService.findMatchedOffersForTripAndOffer(rideOffer.getTripId(), rideOffer.getId());
+                offerRequestMatchesService.findMatchedOffersForTripAndOffer(rideOffer.getTripId(), rideOffer.getId());
         log.info("Found matched requests as: " + matchedRequests);
 
         final int seatsMatched = matchedRequests.stream().mapToInt(OfferRequestMatch::getSeatsMatched).sum();
