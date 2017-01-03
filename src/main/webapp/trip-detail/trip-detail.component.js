@@ -21,7 +21,7 @@ angular.
           self.trip = response.data;
 
           self.trip.departureDateAndTime = new Date(self.trip.departureDateAndTime);
-          self.trip.createdOn = new Date(self.trip.createdOn);
+          self.trip.createdAt = new Date(self.trip.createdAt);
         });
 
         self.offers = [

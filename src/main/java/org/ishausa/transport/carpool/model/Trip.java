@@ -19,5 +19,5 @@ public class Trip {
     private Date departureDateAndTime;
     /** userId of the User that created this trip. */
     private String creator;
-    private Date createdOn;
+    private Date createdAt;
 }

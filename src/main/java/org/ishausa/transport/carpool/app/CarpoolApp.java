@@ -3,6 +3,7 @@ package org.ishausa.transport.carpool.app;
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import org.ishausa.transport.carpool.model.User;
 import org.ishausa.transport.carpool.renderer.JsonTransformer;
 import org.ishausa.transport.carpool.renderer.SoyRenderer;
 import org.ishausa.transport.carpool.security.AuthenticationHandler;
@@ -111,7 +112,10 @@ public class CarpoolApp {
     }
 
     private void configureTripResourceEndpoints() {
-        post(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.createTrip(req.body()), jsonTransformer);
+        post(Paths.TRIPS, ContentType.JSON, (req, res) -> {
+            final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            return tripsService.createTrip(authenticatedUser, req.body());
+        }, jsonTransformer);
 
         get(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.listAll(), jsonTransformer);
 

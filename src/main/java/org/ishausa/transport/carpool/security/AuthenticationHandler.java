@@ -47,6 +47,9 @@ public class AuthenticationHandler {
     /* request params */
     private static final String ID_TOKEN = "id_token";
 
+    /* request attributes */
+    public static final String AUTHENTICATED_USER = "authenticated_user";
+
     private final UsersService usersService;
 
     public AuthenticationHandler(final UsersService usersService) {
@@ -55,23 +58,24 @@ public class AuthenticationHandler {
 
     public void ensureAuthenticated(final Request request, final Response response) throws Exception {
         final String sessionId = request.session().attribute(SESSION_ID);
+        final User user = getUser(sessionId);
 
         final String path = request.pathInfo();
         if (!Paths.LOGIN.equals(path) &&
                 !Paths.VALIDATE_ID_TOKEN.equals(path) &&
-                !isValidSessionId(sessionId)) {
+                user == null) {
 
             log.info("redirecting unauthenticated request to: " + path + " to: " + Paths.LOGIN);
             response.redirect(Paths.LOGIN);
 
             halt(HttpServletResponse.SC_UNAUTHORIZED);
+        } else {
+            request.attribute(AUTHENTICATED_USER, user);
         }
     }
 
-    private boolean isValidSessionId(final String sessionId) {
-        return !StringUtils.isBlank(sessionId) &&
-                // An entry in our database means this user has authorized our app before
-                usersService.findById(sessionId) != null;
+    private User getUser(final String sessionId) {
+        return StringUtils.isNotBlank(sessionId) ? usersService.findById(sessionId) : null;
     }
 
     public String finishLogin(final Request request, final Response response)
