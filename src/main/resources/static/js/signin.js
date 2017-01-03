@@ -8,7 +8,7 @@ function onSignIn(googleUser) {
   ).done(function (res) {
     console.log("response:", res);
     if (res.isSuccess) {
-      window.location.replace(res.redirectPath);
+      window.location = res.redirectPath;
     } else {
       alert("Couldn't validate id token", res.errorMessage);
     }
