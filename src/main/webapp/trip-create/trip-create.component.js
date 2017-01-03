@@ -11,7 +11,7 @@ angular.
         self.createTrip = function (trip) {
           $http.post('/api/v1/trips', trip).then(function (response) {
             console.log("new trip's id:", response);
-            window.location = '/';
+            window.location.href = '/';
           });
         };
       }
