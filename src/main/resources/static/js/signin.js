@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -8,7 +8,6 @@ function onSignIn(googleUser) {
   ).done(function (res) {
     console.log("response:", res);
     if (res.isSuccess) {
-      alert('redirecting to ', res.redirectPath);
       window.location.href = res.redirectPath;
     } else {
       alert("Couldn't validate id token", res.errorMessage);
