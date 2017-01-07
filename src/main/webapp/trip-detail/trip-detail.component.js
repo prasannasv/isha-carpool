@@ -22,12 +22,6 @@ angular.
           self.trip.departureDateAndTime = new Date(self.trip.departureDateAndTime);
           self.trip.createdAt = new Date(self.trip.createdAt);
         });
-
-        self.requests = [
-        ];
-
-        self.matchedOffers = [
-        ];
       }
     ]
   });

@@ -21,4 +21,11 @@ public class OfferRequestMatchesService {
                 .filter("offerId =", offerId)
                 .asList();
     }
+
+    public List<OfferRequestMatch> findMatchedOffersForTripAndRequest(final String tripId, final String requestId) {
+        return datastore.createQuery(OfferRequestMatch.class)
+                .filter("tripId =", tripId)
+                .filter("requestId =", requestId)
+                .asList();
+    }
 }

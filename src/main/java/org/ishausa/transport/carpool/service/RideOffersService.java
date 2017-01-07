@@ -23,13 +23,13 @@ public class RideOffersService {
     private static final Gson GSON = new GsonBuilder().create();
 
     private final Datastore datastore;
-    private final RideOfferAdapter rideOfferAdapter;
+    private final RideOfferAndRequestAdapter rideOfferAndRequestAdapter;
 
     public RideOffersService(final Datastore datastore,
                              final UsersService usersService,
                              final OfferRequestMatchesService offerRequestMatchesService) {
         this.datastore = datastore;
-        this.rideOfferAdapter = new RideOfferAdapter(usersService, offerRequestMatchesService);
+        this.rideOfferAndRequestAdapter = new RideOfferAndRequestAdapter(usersService, offerRequestMatchesService);
     }
 
     public void createRideOffer(final User offerer, final String tripId, final String jsonBody) {
@@ -44,22 +44,22 @@ public class RideOffersService {
         log.info("Created ride offer from jsonBody: " + jsonBody + " for user: " + offerer + ", as: " + rideOffer);
     }
 
-    public List<RideOfferAdapter.RideOffer> findForTrip(final String tripId) {
+    public List<RideOfferAndRequestAdapter.RideOfferOrRequest> findForTrip(final String tripId) {
         return datastore.createQuery(RideOffer.class)
                 .filter("tripId =", tripId)
                 .asList()
                 .stream()
-                .map(rideOfferAdapter::transform)
+                .map(rideOfferAndRequestAdapter::transform)
                 .collect(Collectors.toList());
     }
 
-    public RideOfferAdapter.RideOffer findForTripAndUser(final String tripId, final String userId) {
+    public RideOfferAndRequestAdapter.RideOfferOrRequest findForTripAndUser(final String tripId, final String userId) {
         final RideOffer rideOffer = datastore.createQuery(RideOffer.class)
                 .filter("tripId =", tripId)
                 .filter("userId =", userId)
                 .get();
-        log.info("RideOffer fetched for tripId: " + tripId + " and userId:" + userId + ", is: " + rideOffer);
+        log.info("RideOfferOrRequest fetched for tripId: " + tripId + " and userId:" + userId + ", is: " + rideOffer);
 
-        return rideOfferAdapter.transform(rideOffer);
+        return rideOfferAndRequestAdapter.transform(rideOffer);
     }
 }

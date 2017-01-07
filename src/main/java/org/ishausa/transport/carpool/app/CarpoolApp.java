@@ -11,6 +11,7 @@ import org.ishausa.transport.carpool.security.AuthenticationHandler;
 import org.ishausa.transport.carpool.security.HttpsEnforcer;
 import org.ishausa.transport.carpool.service.OfferRequestMatchesService;
 import org.ishausa.transport.carpool.service.RideOffersService;
+import org.ishausa.transport.carpool.service.RideRequestsService;
 import org.ishausa.transport.carpool.service.TripsService;
 import org.ishausa.transport.carpool.service.UsersService;
 import org.mongodb.morphia.Datastore;
@@ -38,6 +39,7 @@ public class CarpoolApp {
     private final TripsService tripsService;
     private final UsersService usersService;
     private final RideOffersService rideOffersService;
+    private final RideRequestsService rideRequestsService;
     private final AuthenticationHandler authenticationHandler;
     private final OfferRequestMatchesService offerRequestMatchesService;
 
@@ -55,6 +57,7 @@ public class CarpoolApp {
         authenticationHandler = new AuthenticationHandler(usersService);
         offerRequestMatchesService = new OfferRequestMatchesService(datastore);
         rideOffersService = new RideOffersService(datastore, usersService, offerRequestMatchesService);
+        rideRequestsService = new RideRequestsService(datastore, usersService, offerRequestMatchesService);
     }
 
     private Datastore setupMorphia() {
@@ -148,6 +151,23 @@ public class CarpoolApp {
 
             return user.getRole() == Role.REGULAR ? rideOffersService.findForTripAndUser(tripId, user.getUserId()) :
                     rideOffersService.findForTrip(tripId);
+        }, jsonTransformer);
+
+        post(Paths.RIDE_REQUEST_FOR_TRIP_ID, ContentType.JSON, (req, res) -> {
+            final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            final String tripId = req.params(Paths.ID_PARAM);
+
+            rideRequestsService.createRideRequest(authenticatedUser, tripId, req.body());
+
+            return res;
+        });
+
+        get(Paths.RIDE_REQUESTS_FOR_TRIP_ID, ContentType.JSON, (req, res) -> {
+            final User user = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
+            final String tripId = req.params(Paths.ID_PARAM);
+
+            return user.getRole() == Role.REGULAR ? rideRequestsService.findForTripAndUser(tripId, user.getUserId()) :
+                    rideRequestsService.findForTrip(tripId);
         }, jsonTransformer);
     }
 }

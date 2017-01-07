@@ -18,4 +18,5 @@ public class Paths {
     public static final String RIDE_OFFER_FOR_TRIP_ID = TRIP_BY_ID + "/ride_offer";
     public static final String RIDE_REQUEST_FOR_TRIP_ID = TRIP_BY_ID + "/ride_request";
     public static final String RIDE_OFFERS_FOR_TRIP_ID = TRIP_BY_ID + "/ride_offers";
+    public static final String RIDE_REQUESTS_FOR_TRIP_ID = TRIP_BY_ID + "/ride_requests";
 }
