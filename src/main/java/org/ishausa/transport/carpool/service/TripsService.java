@@ -3,6 +3,7 @@ package org.ishausa.transport.carpool.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bson.types.ObjectId;
+import org.ishausa.transport.carpool.model.Role;
 import org.ishausa.transport.carpool.model.Trip;
 import org.ishausa.transport.carpool.model.User;
 import org.mongodb.morphia.Datastore;
@@ -31,6 +32,9 @@ public class TripsService {
     }
 
     public String createTrip(final User creator, final String jsonBody) {
+        if (Role.REGULAR.equals(creator.getRole())) {
+            throw new IllegalStateException("Regular users are not allowed to create trips");
+        }
         final Trip trip = GSON.fromJson(jsonBody, Trip.class);
         trip.setCreator(creator.getUserId());
         trip.setCreatedAt(new Date());

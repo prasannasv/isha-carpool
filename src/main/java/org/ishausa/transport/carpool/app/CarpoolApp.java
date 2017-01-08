@@ -12,12 +12,14 @@ import org.ishausa.transport.carpool.security.HttpsEnforcer;
 import org.ishausa.transport.carpool.service.OfferRequestMatchesService;
 import org.ishausa.transport.carpool.service.RideOffersService;
 import org.ishausa.transport.carpool.service.RideRequestsService;
+import org.ishausa.transport.carpool.service.TripListResponse;
 import org.ishausa.transport.carpool.service.TripsService;
 import org.ishausa.transport.carpool.service.UsersService;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import spark.utils.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -126,10 +128,18 @@ public class CarpoolApp {
     private void configureTripResourceEndpoints() {
         post(Paths.TRIPS, ContentType.JSON, (req, res) -> {
             final User authenticatedUser = req.attribute(AuthenticationHandler.AUTHENTICATED_USER);
-            return tripsService.createTrip(authenticatedUser, req.body());
+            if (Role.REGULAR.equals(authenticatedUser.getRole())) {
+                res.status(HttpServletResponse.SC_FORBIDDEN);
+                return null;
+            } else {
+                return tripsService.createTrip(authenticatedUser, req.body());
+            }
         }, jsonTransformer);
 
-        get(Paths.TRIPS, ContentType.JSON, (req, res) -> tripsService.listAll(), jsonTransformer);
+        get(Paths.TRIPS, ContentType.JSON, (req, res) ->
+                new TripListResponse(req.attribute(AuthenticationHandler.AUTHENTICATED_USER),
+                        tripsService.listAll()),
+                jsonTransformer);
 
         get(Paths.TRIP_BY_ID, ContentType.JSON,
                 (req, res) -> tripsService.find(req.params(Paths.ID_PARAM)), jsonTransformer);

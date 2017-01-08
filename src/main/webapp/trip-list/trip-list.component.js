@@ -17,7 +17,8 @@ angular.
 
       $http.get('/api/v1/trips').then(function (response) {
         console.log("trips list response", response);
-        var allTrips = response.data;
+        var allTrips = response.data.trips;
+        self.userRole = response.data.userRole;
         self.upcomingTrips = [];
         self.pastTrips = [];
 

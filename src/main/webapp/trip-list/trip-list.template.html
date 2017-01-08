@@ -1,4 +1,9 @@
-<h2>All Trips <a class="btn btn-primary pull-right" href="#!/trip_create"><i class="icon-plus-sign icon-white"></i> New Trip</a></h2>
+<h2>
+  All Trips
+  <a class="btn btn-primary pull-right" href="#!/trip_create" ng-show="$ctrl.userRole !== 'REGULAR'">
+    <i class="glyphicon glyphicon-plus"></i> New Trip
+  </a>
+</h2>
 
 <h3>Upcoming Trips</h3>
 <table class="table table-hover table-striped">
