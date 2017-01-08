@@ -29,7 +29,6 @@ angular.
 
         self.createRideOfferOrRequest = function () {
           $http.post('/api/v1/trips/' + tripId + '/ride_' + self.ride.option, self.ride).then(function (response) {
-            alert('Your request was recorded successfully');
             window.location.reload(true /* get the data from server */);
           });
         };

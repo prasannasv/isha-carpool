@@ -16,6 +16,8 @@ angular
           self.orderByField = field;
         };
 
+        self.isPrivilegedUser = false;
+
         var tripId = $routeParams.tripId;
 
         $http.get('/api/v1/trips/' + tripId + '/ride_requests').then(function (response) {
@@ -24,6 +26,9 @@ angular
           if (response.data && response.data !== "null") {
             // it will be a collection for a trip coordinator or an administrator.
             // for regular users, it will be a single object.
+            self.isPrivilegedUser = Array.isArray(response.data);
+            console.log("isPrivilegedUser:", self.isPrivilegedUser);
+
             self.rideRequests = Array.isArray(response.data) ? response.data : [response.data];
           } else {
             self.rideRequests = [];

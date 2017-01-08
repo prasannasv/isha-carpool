@@ -23,7 +23,13 @@ public class UsersService {
 
     public void createOrUpdate(final User user) {
         final User existingUser = findById(user.getUserId());
-        // Return if no fields have changed.
+        // Return if no fields have changed except the role.
+        if (existingUser != null) {
+            // this will let us change the role directly in the database without it getting overwritten
+            user.setRole(existingUser.getRole());
+        }
+        // We do an update of the existing user document because the user may have changed their
+        // first name or even email id.
         if (user.equals(existingUser)) {
             return;
         }
